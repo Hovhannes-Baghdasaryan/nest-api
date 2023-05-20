@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { CarService } from './car.service';
 
-@Controller('car')
+@Controller('cars')
 export class CarController {
   constructor(private carService: CarService) {}
 
