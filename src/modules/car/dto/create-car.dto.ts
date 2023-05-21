@@ -25,7 +25,7 @@ export class CreateCarDto {
   // not older than current year
   @IsNumber()
   @IsNotEmpty()
-  // make this field optional so client has not to pass this prop
+  // make this field optional so client has not to pass
   @IsOptional()
   @Max(new Date().getFullYear())
   // Transforming the prop from string to number

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+
 import { appConfig, databaseConfig } from './config';
-import { CarModule } from './modules';
+import { CarModule, OwnerModule } from './modules';
 
 @Module({
   imports: [
@@ -11,7 +12,6 @@ import { CarModule } from './modules';
       load: [appConfig, databaseConfig],
       envFilePath: ['.env'],
     }),
-    CarModule,
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -19,6 +19,8 @@ import { CarModule } from './modules';
         uri: config.get('database.url'),
       }),
     }),
+    CarModule,
+    OwnerModule,
   ],
 })
 export class AppModule {}

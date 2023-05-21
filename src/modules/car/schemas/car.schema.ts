@@ -1,14 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Owner } from 'modules/owner/schemas';
 import mongoose from 'mongoose';
 
 @Schema({
   versionKey: false,
 })
 export class Car {
-  @Prop({ type: mongoose.Schema.Types.ObjectId })
-  id: string;
-
-  @Prop()
+  @Prop({ unique: true, index: true })
   price: number;
 
   @Prop()
@@ -16,6 +14,9 @@ export class Car {
 
   @Prop()
   year: number;
+
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: Owner.name }])
+  owners: [Owner];
 }
 
 export const CarSchema = SchemaFactory.createForClass(Car);

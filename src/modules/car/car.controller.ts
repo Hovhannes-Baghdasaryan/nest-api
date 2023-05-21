@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { CarService } from './car.service';
+import { Response } from 'express';
 
 @Controller('cars')
 export class CarController {
@@ -11,7 +12,7 @@ export class CarController {
     return await this.carService.getAllCars();
   }
 
-  @Get(':id')
+  @Get(':id/detail')
   async getDetail(@Param('id') carId: string) {
     return await this.carService.getCarDetail(carId);
   }
@@ -27,5 +28,18 @@ export class CarController {
     @Body() updateCarDto: UpdateCarDto,
   ) {
     return await this.carService.updateCar(carId, updateCarDto);
+  }
+
+  @Put(':carId/add-owner/:ownerId')
+  async addCarToOwner(
+    @Param('carId') carId: string,
+    @Param('ownerId') ownerId: string,
+  ) {
+    return await this.carService.addCarToOwner(ownerId, carId);
+  }
+
+  @Get(':carId/owners')
+  async getAllOwners(@Param('carId') carId: string) {
+    return await this.carService.getAllOwners(carId);
   }
 }
